@@ -14,17 +14,13 @@ def is_shorten_link(token, link):
         response = requests.get(api_url, params=params)
         response.raise_for_status()
         answer = response.json()
-        if "response" in answer:
-            return True
-        else:
-            return False
+        return "response" in answer
     except requests.exceptions.HTTPError as e:
-        print(f"Ошибка запроса: {e}")
+        return f"Ошибка запроса: {e}"
     except ValueError as e:
-        print(f"{e}")
+        return f"{e}"
     except KeyError:
-        print("Ошибка: неожиданный формат ответа от API.")
-    return False
+        return "Ошибка: неожиданный формат ответа от API."
 
 
 def shorten_link(token, link):
@@ -38,15 +34,13 @@ def shorten_link(token, link):
         response.raise_for_status()
         answer = response.json()
         short_link = answer["response"]["short_url"]
-        print(f'Сокращенная ссылка: {short_link}')
-        return short_link
+        return f"Сокращенная ссылка: {short_link}"
     except requests.exceptions.HTTPError as e:
-        print(f"Ошибка запроса: {e}")
+        return f"Ошибка запроса: {e}"
     except ValueError as e:
-        print(f"{e}")
+        return f"{e}"
     except KeyError:
-        print("Ошибка: неожиданный формат ответа от API.")
-    return False
+        return "Ошибка: неожиданный формат ответа от API."
 
 
 def count_clicks(token, link):
@@ -61,26 +55,26 @@ def count_clicks(token, link):
         response.raise_for_status()
         answer = response.json()
         link_stats = answer["response"]["stats"][0]["views"]
-        print(f'Количество кликов: {link_stats}')
-        return link_stats
+        return f"Количество кликов: {link_stats}"
     except requests.exceptions.HTTPError as e:
-        print(f"Ошибка запроса: {e}")
+        return f"Ошибка запроса: {e}"
     except ValueError as e:
-        print(f"{e}")
+        return f"{e}"
     except KeyError:
-        print("Ошибка: неожиданный формат ответа от API.")
-    return False
+        return "Ошибка: неожиданный формат ответа от API."
 
 
 def main(token, link):
     if is_shorten_link(token, link):
-        count_clicks(token, link)
+        return count_clicks(token, link)
     else:
-        shorten_link(token, link)
+        return shorten_link(token, link)
 
 
 if __name__ == "__main__":
     load_dotenv()
     vk_token = os.getenv("VK_TOKEN")
     user_input = input("Введите ссылку: ")
-    main(vk_token, user_input)
+    result = main(vk_token, user_input)
+    print(result)
+    
