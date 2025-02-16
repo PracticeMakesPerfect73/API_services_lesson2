@@ -51,6 +51,7 @@ def count_clicks(token, link):
               "key": key,
               "v": "5.199"
               }
+    vk_token = os.environ["VK_TOKEN"]
     try:
         response = requests.get(api_url, params=params)
         response.raise_for_status()
