@@ -1,11 +1,12 @@
 import requests
 import os
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 
 def is_shorten_link(token, link):
     api_url = 'https://api.vk.ru/method/utils.getLinkStats'
-    key = link.split('/')[-1]
+    key = urlparse(link).path.strip('/')
     params = {"access_token": token,
               "key": key,
               "v": "5.199"
@@ -45,7 +46,7 @@ def shorten_link(token, link):
 
 def count_clicks(token, link):
     api_url = 'https://api.vk.ru/method/utils.getLinkStats'
-    key = link.split('/')[-1]
+    key = urlparse(link).path.strip('/')
     params = {"access_token": token,
               "key": key,
               "v": "5.199"
