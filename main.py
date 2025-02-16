@@ -62,5 +62,6 @@ def main():
     except KeyError:
         print("Ошибка: неожиданный формат ответа от API.")
 
+
 if __name__ == "__main__":
     main()
