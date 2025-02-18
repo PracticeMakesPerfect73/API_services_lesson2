@@ -4,12 +4,6 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 
 
-def make_request(api_url, params):
-    response = requests.get(api_url, params=params)
-    response.raise_for_status()
-    return response.json()
-
-
 def is_shorten_link(token, link):
     api_url = 'https://api.vk.ru/method/utils.getLinkStats'
     key = urlparse(link).path.strip('/')
@@ -17,7 +11,9 @@ def is_shorten_link(token, link):
               "key": key,
               "v": "5.199"
               }
-    answer = make_request(api_url, params)
+    response = requests.get(api_url, params=params)
+    response.raise_for_status()
+    answer = response.json()
     return "response" in answer
 
 
@@ -27,7 +23,9 @@ def shorten_link(token, link):
               "url": link,
               "v": "5.199"
               }
-    answer = make_request(api_url, params)
+    response = requests.get(api_url, params=params)
+    response.raise_for_status()
+    answer = response.json()
     short_link = answer["response"]["short_url"]
     return short_link
 
@@ -39,7 +37,9 @@ def count_clicks(token, link):
               "key": key,
               "v": "5.199"
               }
-    answer = make_request(api_url, params)
+    response = requests.get(api_url, params=params)
+    response.raise_for_status()
+    answer = response.json()
     link_stats = answer["response"]["stats"][0]["views"]
     return link_stats
 
