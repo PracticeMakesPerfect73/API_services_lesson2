@@ -56,7 +56,7 @@ def main():
     try:
         if is_shorten_link(vk_token, user_input):
             clicks = count_clicks(vk_token, user_input)
-            print(f"Количество кликов: {clicks}")
+            print(f"По вашей ссылке перешли {clicks} раз")
         else:
             short_link = shorten_link(vk_token, user_input)
             print(f"Сокращенная ссылка: {short_link}")
