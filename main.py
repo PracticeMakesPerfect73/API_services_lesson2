@@ -2,7 +2,7 @@ import requests
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse
-import argparse
+
 
 def is_shorten_link(token, link):
     api_url = 'https://api.vk.ru/method/utils.getLinkStats'
@@ -47,15 +47,11 @@ def count_clicks(token, link):
 def main():
     load_dotenv()
     vk_token = os.environ["VK_TOKEN"]
-    parser = argparse.ArgumentParser(description="VK URL Shortener & Click Counter")
-    parser.add_argument("link", help="Ссылка для сокращения или проверки кликов")
-    args = parser.parse_args()
-
-    user_input = args.link
+    user_input = input("Введите ссылку: ")
     try:
         if is_shorten_link(vk_token, user_input):
             clicks = count_clicks(vk_token, user_input)
-            print(f"По вашей ссылке перешли {clicks} раз")
+            print(f"Количество кликов: {clicks}")
         else:
             short_link = shorten_link(vk_token, user_input)
             print(f"Сокращенная ссылка: {short_link}")
